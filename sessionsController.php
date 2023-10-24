@@ -20,7 +20,7 @@ class SessionController
         }
     }
 
-    function create($name_user, $name, $surname, $password)
+    function create($user, $name, $surname, $password)
     {
         $repo = new UserRepository();
         $user = new User($user, $name, $surname);
@@ -34,25 +34,4 @@ class SessionController
             return [ true, "Usuario creado correctamente" ];
         }
     }
-
-    function delete(User $user)
-    {
-        $repo = new UserRepository();
-        return $repo->delete($user);
-    }
-
-    function modify(string $user, string $name, string $surname, User $user)
-    {
-        $repo = new UserRepository();
-
-        if ($repo->update($user, $name, $surname, $user)) {
-            $user->setData($user, $name, $surname);
-            $_SESSION['user'] = serialize($user);
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 }

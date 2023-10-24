@@ -1,5 +1,5 @@
 <?php
-require_once 'sessionController.php';
+require_once 'sessionsController.php';
 
 if (isset($_POST['user']) && isset($_POST['password'])) {
     $cs = new SessionController();

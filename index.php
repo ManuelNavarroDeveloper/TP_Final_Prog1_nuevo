@@ -24,7 +24,7 @@
             <br><input name="password" type="text" class="control" placeholder="Contraseña"><br>
             <br><input type="submit" value="Ingresar" class="boton">
         </form><br>
-        <p><a href="signup.php">Crear nuevo usuario</a></p>
+        <p><a href="create.php">Crear nuevo usuario</a></p>
       </div> 
     </body>
 </html>
