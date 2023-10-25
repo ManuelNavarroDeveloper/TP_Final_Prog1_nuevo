@@ -6,6 +6,21 @@ require_once 'sessionsController.php';
 
 class BookController
 {
+    public $bookOption;
+
+    public function __construct()
+    {
+        if (isset($_POST['bookOption'])) {
+            $this->bookOption = $_POST['bookOption'];
+            $this->rentBook();
+        }
+
+        if (isset($_POST['return'])) {
+            $this->returnBook();
+        }
+        
+    }
+
     public function getDisplayableBooks(){
         $displayableBooks = new BookRepository;
         return $displayableBooks->getAvailableOptions(); 
@@ -21,15 +36,21 @@ class BookController
         return $rentedBooks->getRentedBooks();
     }
 
-    
     public function bookOption(){
-        return $bookOption = $_POST["bookOption"];
+        return $bookOption;      
     }
 
     public function rentBook(){
-
         $rentBook = new BookRepository;
         $rentBook->getRentBooks();
+    }
+
+    public function returnBook(){
+        $returnBook = new BookRepository;
+        $returnBook->getReturnBooks();
+    }
+
+    public function redirect(){
         return header("Location: /TP_Final_Prog1_nuevo/home.php");
     }
     

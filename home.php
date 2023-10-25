@@ -25,9 +25,9 @@ require 'bookController.php';
 </form>
 <br>
 
-<form action=".php" method="post">
+<form action="bookController.php" method="post">
     <label> Devuelva todos sus libros alquilados </label><br>
-    <br><input type="submit" value="Devolver" class="boton">
+    <br><input type="submit" name="return" value="Devolver" class="boton">
 </form>
 </body>
 

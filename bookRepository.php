@@ -66,10 +66,18 @@ class BookRepository{
         $id = new SessionController;
         $id->userID();
         $bookOption = new BookController;
-        $bookOption->rentBook();
+        $bookOption->bookOption();
         $queryRent = "UPDATE `books` SET `user_id` = " . $id . " WHERE `books`.`isbn` =" . $bookOption;
         $rentedBook = mysqli_query($self::$connection, $queryRent);
-        return header("Location: /TP_Final_Prog1_nuevo/home.php");
+        $bookOption->redirect();
+    }
+
+    public function getReturnBooks(){
+        $id = new SessionController;
+        $id->userID();
+        $queryReturn = "UPDATE `books` SET `user_id` = NULL WHERE `books`.`user_id` = " . $id ;
+        $returnedBook = mysqli_query($self::$connection, $queryReturn);
+        $bookOption->redirect();
     }
     
 }
