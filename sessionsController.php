@@ -34,4 +34,13 @@ class SessionController
             return [ true, "Usuario creado correctamente" ];
         }
     }
+
+    public function userID() {
+        if (isset($_SESSION['user'])) {
+            $user = unserialize($_SESSION['user']);
+            return $user->getId();
+        } else {
+            return null;
+        }
+    }
 }

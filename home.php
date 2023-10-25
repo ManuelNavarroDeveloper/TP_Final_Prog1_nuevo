@@ -1,3 +1,7 @@
+<?php
+require 'bookController.php';
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -6,23 +10,24 @@
     <meta name="viewport" content="width=device-width">
     <title>Libreria</title>
 </head>
-<form action=".php" method="post">
+<form action="bookController.php" method="post">
     <h2> Elige el libro que quieres alquilar </h2><br>
     <label> Libros disponibles: </label><br>
 
-    <br><select name="" class="seleccionar">
+    <br><select name="bookOption">
         <option value=""> Seleccione un libro</option>
         <?php
+            $bookController = new BookController;
+            $bookController->getDisplayableBooks();
         ?>
     </select><br>
-    <br><input type="submit" value="alquilar" class="boton">
+    <br><input type="submit" value="Alquilar" class="boton">
 </form>
-
 <br>
 
 <form action=".php" method="post">
     <label> Devuelva todos sus libros alquilados </label><br>
-    <br><input type="submit" value="devolver" class="boton">
+    <br><input type="submit" value="Devolver" class="boton">
 </form>
 </body>
 
@@ -30,7 +35,7 @@
 
 <a>Libros alquilados por la gente: 
     <?php 
-
+        echo $bookController->rentedBooks();    
 ?></a>
 <br>
 
@@ -38,7 +43,7 @@
 
 <a>Cantidad de libros que tenemos disponibles:
     <?php 
-
+        echo $bookController->totalAvaliableBooks();    
 ?></a>
 <br>
 

@@ -2,9 +2,10 @@
 
 require_once 'user.php';
 require_once '.env.php';
+require_once 'sessionsController.php';
 
-class bookRepository
-{
+class BookRepository{
+    
     private static $connection = null;
 
     public function __construct()
@@ -25,3 +26,50 @@ class bookRepository
         }
         self::$connection->set_charset('utf8mb4');
     }
+
+    public function getAvailableOptions()
+    {
+        $books = "SELECT * FROM books";
+        $getBooks = mysqli_query(self::$connection, $books);
+        $avaliableBooks = mysqli_num_rows($getBooks);
+
+
+        for ($i = 1; $i < $avaliableBooks + 1; $i++) {
+            $booksISBN = "SELECT * FROM books WHERE isbn = " . $i;
+            $getBooksISBN = mysqli_query(self::$connection, $booksISBN);
+            $book = $getBooksISBN->fetch_array();
+            if ($book[1] == NULL) {
+                echo "<option value=\"" . $book[0] . "\" >" . $book[2] . "</option>";
+            }
+        }
+        return;
+    }
+
+    public function getCountBooks()
+    {
+        $queryCountBooks = "SELECT COUNT(*) FROM books WHERE user_id IS NULL";
+        $getCount = mysqli_query(self::$connection, $queryCountBooks);
+        $count = mysqli_fetch_assoc($getCount);
+        return $count['COUNT(*)'];
+    }
+
+    public function getRentedBooks(){
+        $queryRentedBooks = "SELECT DISTINCT `title` FROM `books` WHERE `user_id` IS NOT NULL";
+        $getRentedBooks = mysqli_query(self::$connection, $queryRentedBooks);
+        $rentedBooks = mysqli_fetch_all($getRentedBooks, MYSQLI_ASSOC);
+        $titles = array_column($rentedBooks, 'title');
+        return implode(", ", $titles);
+        
+    }
+
+    public function getRentBooks(){
+        $id = new SessionController;
+        $id->userID();
+        $bookOption = new BookController;
+        $bookOption->rentBook();
+        $queryRent = "UPDATE `books` SET `user_id` = " . $id . " WHERE `books`.`isbn` =" . $bookOption;
+        $rentedBook = mysqli_query($self::$connection, $queryRent);
+        return header("Location: /TP_Final_Prog1_nuevo/home.php");
+    }
+    
+}
